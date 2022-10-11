@@ -1,0 +1,235 @@
+html, body{
+    scroll-behavior: smooth;
+    font-family: 'Andika', 'Trebuchet MS', 'Tahoma';
+    width: 100%;
+    margin:0;
+    padding:0;
+    --paradise-pink: #ef476fff;
+    --orange-yellow-crayola: #ffd166ff;
+    --caribbean-green: #06d6a0ff;
+    --blue-ncs: #118ab2ff;
+    --midnight-green-eagle-green: #073b4cff;
+}
+
+
+#title{
+    position:fixed;
+    top:0;
+    font-size: large;
+    left:1em;
+    color: hwb(0 100% 0% / 0.455);
+    z-index: 9999999;
+    cursor: default;
+}
+
+#title img{
+    max-height:1em; filter: brightness(1000%) opacity(45.5%);
+}
+
+#initial_block{
+    justify-content: center;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 300%;
+}
+
+#initial_block *{
+    color: white;
+    text-align: center;
+}
+
+#initial_scrolldown{
+    font-size:70%;
+    line-height: 0;
+}
+
+.fadeIn:not(.active){
+    opacity: 0;
+}
+
+.fadeIn.active, .active .fadeIn{
+    opacity: 1;
+    transition: opacity 1s linear;
+}
+
+.moveUpDown.active, .active .moveUpDown{
+  animation: MoveUpDown 5s linear infinite;
+  position: relative;
+  left: 0;
+  top: -.25em;
+}
+
+@keyframes MoveUpDown {
+  0%, 100% {
+    top: -.25em;
+  }
+  50% {
+    top: .25em;
+  }
+}
+
+.cover:not(.active){
+    display:none;
+}
+.cover.active{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top:0;
+    left: 0;
+    background: url("media/logo3.png") no-repeat center center fixed; 
+    background-color: white;
+    color: white;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    z-index:9999;
+}
+.radial-gradient {
+    /*Fallback if gradeints don't work */
+    background: var(--blue-ncs), url("media/logo3.png") no-repeat center center fixed;
+    /*Linear gradient... */
+    background:
+      radial-gradient(
+       at left, var(--caribbean-green), var(--blue-ncs)
+      ), url("media/logo3.png")  no-repeat center center fixed;
+      background-blend-mode: color;
+}
+
+/* Style the tab buttons */
+.tablink {
+    background-color: #555;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 25%;
+  }
+  
+  /* Change background color of buttons on hover */
+  .tablink:hover {
+    background-color: #777;
+  }
+  
+  /* Set default styles for tab content/headers */
+
+    #header{
+        position: sticky;
+        font-size: 0;
+        top:0
+    }
+  .tabcontent.header {
+    font-size:large;
+    color: white;
+    padding: 2em;
+    text-align: center;
+    transition: 0.2s
+  }
+
+  .tabcontent.header .header-sub{
+    transition: 0.2s;
+  }
+
+  .tabcontent{
+    display: none;
+  }
+
+  .content{
+    margin-left:5em;
+    margin-right: 5em;
+    padding:5em;
+  }
+
+  @media screen and (max-width: 600px) { 
+    .content{
+      margin-left:.5em !important;
+      margin-right: .5em !important;
+      padding:.5em !important;
+    }
+  }
+  
+  /* Style each tab content individually */
+  #about-header, .about-color {background-color: var(--blue-ncs);}
+  #portfolio-header, .portfolio-color {background-color:var(--paradise-pink);}
+  #contact-header, .contact-color {background-color:var(--caribbean-green);}
+  #havefun-header, .havefun-color {background-color:var(--orange-yellow-crayola);}
+ .extra-color {background-color:var(--midnight-green-eagle-green); color:white}
+
+  /*#073b4c*/
+.writeanimation_after{
+    visibility: hidden;
+}
+
+.btn {
+    border: none;
+    outline: none;
+    padding: 12px 16px;
+    cursor: pointer;
+}
+
+#contact .btn:hover{
+  background-color: hsl(195, 83%, 30%);
+}
+
+#contactForm input{
+  width: 80%;
+}
+  
+  /* Add a grey background color on mouse-over */
+ #portfolio .btn:hover {
+    background-color: hwb(346 50% 6%);
+  }
+  
+  /* Add a dark background color to the active button */
+ #portfolio .btn.active {
+    background-color: var(--paradise-pink);
+     color: white;
+  }
+
+ #portfolio .row {
+    margin: 8px -16px;
+  }
+  
+  /* Add padding BETWEEN each column (if you want) */
+  #portfolio.row,
+  #portfolio .row > #portfolio .column {
+    padding: 8px;
+  }
+  
+  /* Create three equal columns that floats next to each other */
+  @media screen and (min-width: 600px) { 
+    #portfolio .column {
+      float: left;
+      width: 33.33%;
+    }
+  }
+
+  #portfolio .column {
+    display: none; /* Hide columns by default */
+  }
+  
+  /* Clear floats after rows */
+  #portfolio .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* Content */
+  #portfolio .content {
+    background-color: white;
+    padding: 10px;
+  }
+  
+  /* The "show" class is added to the filtered elements */
+  #portfolio .show {
+    display: block;
+  }
+
+
+
+  /* Have fun */

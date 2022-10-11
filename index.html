@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href='https://fonts.googleapis.com/css?family=Andika' rel='stylesheet'>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap-grid.min.css" integrity="sha512-a+PObWRxNVh4HZR9wijCGj84JgJ/QhZ8dET09REfYz2clUBjKYhGbOmdy9KEHilYKgbMSIHNQEsonv/r75mHXw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <script type="text/javascript" src="functions.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/js/bootstrap.min.js" integrity="sha512-5BqtYqlWfJemW5+v+TZUs22uigI8tXeVah5S/1Z6qBLVO7gakAOtkOzUtgq6dsIo5c0NJdmGPs0H9I+2OHUHVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>    
+    </head>
+    <body>
+        <script>
+            window.addEventListener('load', (event) => {
+               //Hide cover
+                $(".cover").hide();
+
+               //Full screen
+                document.getElementById("initial_block").style.height=(document.documentElement.scrollHeight??window.innerHeight)+"px";
+               
+                //Manage tabs
+                document.getElementById("defaultOpen").click();
+
+               //Shrink header
+               const offsettop=$("#top").offset().top;
+               var isHeaderExpanded=true;
+               window.onscroll = function() {scrollFunction(offsettop)};
+
+               function compressHeaders(headers){
+                    if(isHeaderExpanded){
+                        for(var i=0; i<headers.length; i++){
+                            headers[i].style.padding= '0';
+                            $(document.getElementsByClassName("header-sub")[i]).css('font-size', '0')
+                        }
+                            
+                        window.scrollBy(0, 20);                     
+                        isHeaderExpanded=false;
+                    }
+               }
+
+               function expandHeaders(headers, offsettop, rep){
+                    if(!isHeaderExpanded){
+                        for(var i=0; i<headers.length; i++){
+                            headers[i].style.padding= '2em';
+                            $(document.getElementsByClassName("header-sub")[i]).css('font-size', 'large')
+                        }
+                        setTimeout( () => {
+                            isHeaderExpanded=true;
+                        }, 100);
+                    }
+               }
+
+               function scrollFunction(offsettop) {
+                    var headers = document.getElementsByClassName("tabcontent header")
+                    if ((document.body.scrollTop > offsettop || document.documentElement.scrollTop > offsettop)) {
+                        compressHeaders(headers, offsettop);
+                    } else if((document.body.scrollTop <= offsettop || document.documentElement.scrollTop <= offsettop)){
+                        expandHeaders(headers, offsettop);
+                    }
+                }
+
+                //Select tab by href
+                if(document.getElementsByClassName("tablink-"+window.location.href?.toString().split("#")[1])[0]){
+                    const tab = document.getElementsByClassName("tablink-"+window.location.href.toString().split("#")[1])[0];
+                    tab.click();
+                    window.location.href="#top";
+                }
+
+                //Unselectable title
+                document. getElementById("title"). onselectstart = function () { return false; }
+
+               //Radial gradient
+                $(document).mousemove(function(e) {
+                    windowWidth = $(window).width();
+                    windowHeight = $(window).height();
+                    
+                    mouseXpercentage = Math.round(e.pageX / windowWidth * 100);
+                    mouseYpercentage = Math.round(e.pageY / windowHeight * 100);
+                    
+                    $('.radial-gradient').css('background', 'radial-gradient(at ' + mouseXpercentage + '% ' + mouseYpercentage + '%, var(--caribbean-green), var(--blue-ncs)), url("media/logo3.png")  no-repeat center center fixed');
+                });
+
+               //Write animation
+                writeanimation(document.getElementById("initial_hi"), {delay:200}, function(){
+                    writeanimation(document.getElementById("initial_welcome"), {delay: 50, makeVisible:true}, function(){
+                        document.getElementById("initial_scrolldown").classList.add("active");
+                    });
+                });
+
+                //Initialize components
+                initFilter(document.getElementById("portfolioContainer"));
+            });
+        </script>
+        <div class="cover active">Loading</div>
+        <div id="title"><p style="font-size: small;"><img src="media/logo3.png" aria-hidden="true"></img> Valentino Cioffi</p></div>
+        <div height=100% id="initial_block" class="radial-gradient focusParent">
+            <!-- Hi - Header -->
+            <div class="text-center">
+                <h1 class="display-4" aria-label="Hi" id="initial_hi">Hi :)</h1>
+                <p id="initial_welcome" aria-label="Welcome to my personal website." class="writeanimation_after">Welcome to my personal website.</p>
+                <br/><div id="initial_scrolldown" class="fadeIn" aria-hidden="true"><p>Scroll down</p><i class="fa fa-angle-double-down moveUpDown" aria-hidden="true"></i></div>
+            </div>
+        </div>
+
+        <div id="top"></div>
+        <div id="header">
+            <div id="about-header" class="tabcontent header">
+                <h1 class="header-main">About</h1>
+                <p class="header-sub">A little information about myself.</p>
+            </div>
+            
+            <div id="portfolio-header" class="tabcontent header">
+                <h1 class="header-main">Portfolio</h1>
+                <p class="header-sub">An overview of my past works.</p>
+            </div>
+            
+            <div id="contact-header" class="tabcontent header">
+                <h1 class="header-main">Contact</h1>
+                <p class="header-sub">If you are interested in hiring me or just want some information on my past works feel free to reach out to me.</p>
+            </div>
+            
+            <div id="havefun-header" class="tabcontent header">
+                <h1 class="header-main">Have fun</h1>
+                <p class="header-sub">Some entrataining experiments of mine :)</p>
+            </div><!--
+            --><button class="tablink tablink-about" onclick="openTab('about', this, '#118ab2');" id="defaultOpen">About</button>
+            <button class="tablink tablink-portfolio" onclick="openTab('portfolio', this, '#ef476f');">Portfolio</button>
+            <button class="tablink tablink-contact" onclick="openTab('contact', this, '#06d6a0');">Contact</button>
+            <button class="tablink tablink-havefun" onclick="openTab('havefun', this, '#ffd166');">Have fun</button>
+        </div>
+        
+        <div id="about" class="tabcontent content">
+            <h1>About</h1>
+            <p style="height:100%">...</p>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        </div>
+        
+        <div id="portfolio" class="tabcontent content">
+            <h1>Portfolio</h1>
+            <div id="portfolioContainer">
+                <button class="btn active" onclick="filterSelection('all')"> Show all</button>
+                <button class="btn" onclick="filterSelection('websites')"> Websites</button>
+                <button class="btn" onclick="filterSelection('extensions')"> Extensions</button>
+                <button class="btn" onclick="filterSelection('mobile')"> Mobile</button>
+                <button class="btn" onclick="filterSelection('wikipedia')"> Wikipedia</button>
+                <button class="btn" onclick="filterSelection('other')"> Other</button>
+            </div>
+            <!-- Portfolio Gallery Grid -->
+            <div class="row">
+                <div class="column websites">
+                    <div class="content">
+                    <h4 style="display:flex; flex-wrap: wrap; gap: 0.5em">valcioffi.github.com <i class="fa fa-github" style="cursor:pointer;" title="Open on GitHub" onclick="window.open('https://github.com/valcioffi/valcioffi.github.com')"></i></h4>
+                    <p>This website is also meant to showcase my skills :)  Visit the "Have fun" section!</p>
+                    </div>
+                </div>
+                <div class="column websites mobile">
+                    <div class="content">
+                    <h4  style="display:flex; flex-wrap: wrap; gap: 0.5em">Study Planner <sup title="Work In Progress" style="cursor:help">WIP</sup></h4>
+                    <p>Web App for students to organize their study.</p>
+                    </div>
+                </div>
+        
+                <div class="column extensions">
+                    <div class="content">
+                    <h4  style="display:flex; flex-wrap: wrap; gap: 0.5em">Sticky Notes (Chrome) <sup title="Work In Progress" style="cursor:help">WIP</sup></h4>
+                    <p>Allows users to create permanent sticky notes on websites.</p>
+                    </div>
+                </div>
+                <div class="column extensions">
+                    <div class="content">
+                    <h4  style="display:flex; flex-wrap: wrap; gap: 0.5em">Marker (Chrome) <sup title="Work In Progress" style="cursor:help">WIP</sup></h4>
+                    <p>Allows users to (even permanently) highlight text on websites.</p>
+                    </div>
+                </div>     
+                <div class="column mobile">
+                    <div class="content">
+                    <h4  style="display:flex; flex-wrap: wrap; gap: 0.5em">Frame Widget (Android) <sup title="Work In Progress" style="cursor:help">WIP</sup></h4>
+                    <p>Add pictures to your home screen.</p>
+                    </div>
+                </div>
+                <div class="column wikipedia">
+                    <div class="content">
+                    <h4 style="display:flex; flex-wrap: wrap; gap: 0.5em">BOTutor <i class="fa fa-wikipedia-w" style="cursor:pointer;" title="Open on Wikipedia" onclick="window.open('https://meta.wikimedia.org/wiki/User:BOTutor')"></i><i class="fa fa-github" style="cursor:pointer;" title="Open on GitHub" onclick="window.open('https://github.com/valcioffi/botutor')"></i></h4>
+                    <p>Bot that runs on Wikipedia with management functions.</p>
+                    </div>
+                </div>
+                <div class="column wikipedia websites">
+                    <div class="content">
+                    <h4 style="display:flex; flex-wrap: wrap; gap: 0.5em">tutor.toolforge.org <i class="fa fa-external-link" style="cursor:pointer;" title="Open Website" onclick="window.open('https://tutor.toolforge.org')"></i><i class="fa fa-github" style="cursor:pointer;" title="Open on GitHub" onclick="window.open('https://github.com/valcioffi/botutor')"></i></h4>
+                    <p>Webservice to manage a Wikipedia Bot.</p>
+                    </div>
+                </div>
+                <div class="column wikipedia">
+                    <div class="content">
+                    <h4 style="display:flex; flex-wrap: wrap; gap: 0.5em">Wikipedia Gadgets <i class="fa fa-info" style="cursor:pointer;" title="Details" onclick="window.open('/wikipedia/gadgets')"></i></h4>
+                    <p>Gadgets/Scripts that are currently in use on Wikipedia.</p>
+                    </div>
+                </div>
+                <div class="column other">
+                    <div class="content">
+                    <h4 style="display:flex; flex-wrap: wrap; gap: 0.5em">Email API <i class="fa fa-info" style="cursor:pointer;" title="Details" onclick="window.open('/vcx-api/mail')"></i><i class="fa fa-github" style="cursor:pointer;" title="Open on GitHub" onclick="window.open('https://github.com/valcioffi/vcx-api')"></i></h4>
+                    <p>Allow users to send you emails trought an API call. See example in the "Contact" section.</p>
+                    </div>
+                </div>
+                <!-- END GRID -->
+            </div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        </div>
+        
+        <div id="contact" class="tabcontent content">
+            <h1>Contact</h1>
+            <div style="height: 80%; background-color: var(--caribbean-green); padding:2em">
+                <h2>Reach out to me</h2>
+                <script>
+                    function sendEmail()
+                    {   
+                        const initText=document.getElementById("sendEmailBtn").innerHTML;
+                        document.getElementById("sendEmailBtn").innerHTML="...";
+                        var data = $("#contactForm").serializeArray();
+                        var postData = {senderName: encodeURIComponent(data[0]?.value ?? "(Anonymous user)"), senderEmail: encodeURIComponent(data[1].value), message: encodeURIComponent(data[2].value), sendCopy: "&sendCopy="+encodeURIComponent(data[3]?.checked ?? "")};
+                        const Http = new XMLHttpRequest();
+                        const url='https://vcx-api.herokuapp.com/email?senderEmail='+postData.senderEmail+'&senderName='+postData.senderName+'&message='+postData.message+postData.sendCopy;
+                        Http.open("POST", url);
+                        Http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                        Http.send();
+
+                        Http.onreadystatechange = (e) => {
+                            document.getElementById("sendEmailBtn").innerHTML=initText;
+                            if(JSON.parse(Http.responseText).type=="Success"){
+                                document.getElementById("contactForm").innerHTML="Message sent!";
+                            }else{
+                                alert("Error.\n"+JSON.parse(Http.responseText).message);
+                            }
+                        }
+
+                    };
+                </script>
+                <form id="contactForm">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Name</label><br/>
+                                <input type="text" id="senderName" name="senderName" required></input><br/><br/>
+                            </div>
+                            <div class="col-sm-6">
+                                <label>Email</label><br/>
+                                <input type="email" id="senderEmail" name="senderEmail" required></input><br/><br/>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>Message</label><br/>
+                                <textarea id="message" name="message" style="width: 90%; max-width:90%" rows="10" required></textarea><br/><br/>            
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>Send copy</label>
+                                <input type="checkbox" id="sendCopy" name="sendCopy" style="width:fit-content !important" checked></input><br/><br/>   
+                            </div>     
+                        </div>
+                    </div>
+                    <button onClick="sendEmail()" type="button" class="btn extra-color" id="sendEmailBtn">
+                        Submit
+                    </button>
+                </form>
+
+            </div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        </div>
+        
+        <div id="havefun" class="tabcontent content">
+            <h1>Have fun</h1>
+        </div>
+        <hr/>
+        <p>© Valentino Cioffi - 2022</p>
+        <a href="#top" onClick="document.getElementsByClassName('tablink-contact')[0].click()">Contacts</a>
+    </body>
+</html>
