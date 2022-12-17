@@ -9,8 +9,17 @@ html, body{
     --caribbean-green: #06d6a0ff;
     --blue-ncs: #118ab2ff;
     --midnight-green-eagle-green: #073b4cff;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
+#top{
+  margin:0;
+}
 
 #title{
     position:fixed;
@@ -119,6 +128,7 @@ html, body{
 
     #header{
         position: sticky;
+        margin:0;
         font-size: 0;
         top:0
     }
@@ -127,7 +137,8 @@ html, body{
     color: white;
     padding: 2em;
     text-align: center;
-    transition: 0.2s
+    transition: 0.2s;
+    margin:0;
   }
 
   .tabcontent.header .header-sub{
@@ -201,7 +212,7 @@ html, body{
   }
   
   /* Create three equal columns that floats next to each other */
-  @media screen and (min-width: 600px) { 
+  @media screen and (min-width: 900px) { 
     #portfolio .column {
       float: left;
       width: 33.33%;
